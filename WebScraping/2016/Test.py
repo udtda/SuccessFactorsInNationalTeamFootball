@@ -1,0 +1,21 @@
+import requests
+import csv
+import codecs
+import time
+from bs4 import BeautifulSoup
+from selenium import webdriver
+
+from Links import tmLinkGetterAuf, tmLinkGetterStat
+from Scraper import scraper
+
+
+tmHelp=["https://www.transfermarkt.de/spielbericht/index/spielbericht/2645635", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645636", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645637", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645638", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645641", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645640", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645639", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645670", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645643", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645642", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645644", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645645", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645648", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645647", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645646", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645649", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645650", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645651", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645654", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645653", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645652", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645655", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645656", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645657", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645658", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645659", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645661", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645660", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645663", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645662", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645665", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645664", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645668", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645669", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645667", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2645666", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2701329", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2701342", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2701330", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2701343", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2701331", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2701344", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2701332", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2701345", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2702906", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2702907", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2702908", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2703265", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2707818", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2707829", "https://www.transfermarkt.de/spielbericht/index/spielbericht/2711570"]
+tm1=[]
+tm2=[]
+for i in range(51):
+    tm1.append(tmLinkGetterAuf(tmHelp[i]))
+    tm2.append(tmLinkGetterStat(tmHelp[i]))
+
+print(tm1)
+print()
+print(tm2)
