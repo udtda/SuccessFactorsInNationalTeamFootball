@@ -1,0 +1,49 @@
+﻿$(document).ready(function () {
+
+    if (!window.gaModules || !window.gaModules["match/ga-match-common"]) return;
+
+    //Click on Match Selection
+    //$('#breadcrumb-nav select').change('click', function () {
+    //    var dataId = this.id;
+    //    NGGA.trackEvent(NGGA.Categories.Match, NGGA.Actions.ClickBreadcrumbNav, 'Select_MatchType' + ' ' + dataId);
+    //});
+
+    //At the PlayerHearder 
+    //Click Tournament
+    $('#breadcrumb-nav a[href*="/Regions/"]').on('click', function () {
+        NGGA.trackEvent(NGGA.Categories.Match, NGGA.Actions.ClickTournament, 'ContentHeader');
+    });
+
+    //Click Team 
+    $('#match-header .team-link').on('click', function () {
+        NGGA.trackEvent(NGGA.Categories.Match, NGGA.Actions.ClickTeam, 'ContentHeader');
+    });
+
+    //Click Menubar 
+    $('#sub-navigation ').on('click','a[href*="/Preview/"]', function () {
+
+        NGGA.trackEvent(NGGA.Categories.Match, NGGA.Actions.ClickMenuBar, 'Menubar_Preview');
+
+    }).on('click','a[href*="/Show/"]', function () {
+
+        NGGA.trackEvent(NGGA.Categories.Match, NGGA.Actions.ClickMenuBar, 'Menubar_HeadToHead');
+    }).on('click', 'a[href*="/Betting/"]', function () {
+
+        NGGA.trackEvent(NGGA.Categories.Match, NGGA.Actions.ClickMenuBar, 'Menubar_Betting');
+    }).on('click','a[href*="/Live/"]', function () {
+
+        NGGA.trackEvent(NGGA.Categories.Match, NGGA.Actions.ClickMenuBar, 'Menubar_MatchCentre');
+    });
+
+    $('#sub-sub-navigation ').on('click', 'a[href*="/Show/"]', function () {
+
+        NGGA.trackEvent(NGGA.Categories.Match, NGGA.Actions.ClickMenuBar, 'Menubar_Summary');
+    }).on('click', 'a[href*="/TeamStatistics/"]', function () {
+
+        NGGA.trackEvent(NGGA.Categories.Match, NGGA.Actions.ClickMenuBar, 'Menubar_TeamStatistics');
+    }).on('click', 'a[href*="/PlayerStatistics/"]', function () {
+
+        NGGA.trackEvent(NGGA.Categories.Match, NGGA.Actions.ClickMenuBar, 'Menubar_PlayerStatistics');
+    });
+
+});

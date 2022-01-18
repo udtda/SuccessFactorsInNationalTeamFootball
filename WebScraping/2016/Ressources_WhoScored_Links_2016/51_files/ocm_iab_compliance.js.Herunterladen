@@ -1,0 +1,124 @@
+window.OCM = {
+	gdprApplies: false,
+	consentData: null,
+	hasPurposeOneConsent: false,
+	hasGoogleConsent: false,
+	serveNonPersonalized: true,
+}
+
+var googletag = window.googletag || {cmd: []};
+
+function ocmIABLoadScripts() {
+	var new_script;
+	var old_attr;
+	var attr;
+
+	var cmpSrcs = document.querySelectorAll('script[data-cmp-src]')
+	if (cmpSrcs.length) {
+		cmpSrcs.forEach(function(script) {
+			new_script = document.createElement('script');
+
+			old_attr = Array.prototype.slice.call(script.attributes);
+			while(attr = old_attr.pop()) {
+				if (attr.nodeName === 'data-cmp-src') {
+					new_script.setAttribute('src', attr.nodeValue)
+				} else {
+					new_script.setAttribute(attr.nodeName, attr.nodeValue)
+				}
+			}
+
+			script.parentNode.insertBefore(new_script, script);
+			script.remove()
+		})
+	}
+
+	var cmpScripts = document.querySelectorAll('script[data-cmp-script]')
+	if (cmpScripts.length) {
+		cmpScripts.forEach(function(script) {
+			new_script = document.createElement('script');
+			
+			old_attr = Array.prototype.slice.call(script.attributes);
+			while(attr = old_attr.pop()) {
+				if (attr.nodeName === 'data-cmp-script') {
+					new_script.setAttribute('type', 'text/javascript')
+				} else if (attr.nodeName === 'type') {
+					//
+				} else {
+					new_script.setAttribute(attr.nodeName, attr.nodeValue)
+				}
+			}
+
+			new_script.text = script.text;
+
+			script.parentNode.insertBefore(new_script, script);
+			script.remove()
+		})
+	}
+}
+
+(function ocmWaitTcf() {
+	if (typeof window.__tcfapi === 'undefined' && typeof window.__cmp === 'undefined') {
+		setTimeout(ocmWaitTcf, 100)
+	} else {
+		if (typeof window.__tcfapi !== 'undefined') {
+			// TCF v2.0
+			window.__tcfapi('addEventListener', 2, function(tcfData, success) {
+				if (success && (tcfData.eventStatus === 'tcloaded' || tcfData.eventStatus === 'useractioncomplete')) {
+					window.OCM.consentData = tcfData
+					
+					if (!tcfData.gdprApplies) {
+						// GDPR DOES NOT APPLY, Load scripts
+						ocmIABLoadScripts()
+					} else {
+						window.OCM.gdprApplies = true;
+
+						var hasPurposeOneConsent = tcfData.purpose.consents["1"];
+						window.OCM.hasPurposeOneConsent = hasPurposeOneConsent;
+
+						var hasGoogleConsent = false;
+						var serveNonPersonalized = 1;
+						
+						// Purpose 1
+						if (hasPurposeOneConsent) {
+							if (tcfData.vendor.consents["755"] && tcfData.vendor.legitimateInterests["755"]) {
+								if (
+                                    (tcfData.purpose.consents["2"] || tcfData.purpose.legitimateInterests["2"]) &&
+                                    (tcfData.purpose.consents["7"] || tcfData.purpose.legitimateInterests["7"]) &&
+                                    (tcfData.purpose.consents["9"] || tcfData.purpose.legitimateInterests["9"]) &&
+                                    (tcfData.purpose.consents["10"] || tcfData.purpose.legitimateInterests["10"])
+                                ) {
+									hasGoogleConsent = true;
+									window.OCM.hasGoogleConsent = true;
+
+									if (
+										(tcfData.purpose.consents["3"] || tcfData.purpose.legitimateInterests["3"]) &&
+										(tcfData.purpose.consents["4"] || tcfData.purpose.legitimateInterests["4"])
+										) {
+										serveNonPersonalized = 0;
+										window.OCM.serveNonPersonalized = false;
+									}
+
+                                }
+							} else {
+
+							}
+						}
+
+						googletag.cmd.push(function() {
+							googletag.pubads().setRequestNonPersonalizedAds(serveNonPersonalized);
+						})
+
+						// Load scripts
+						ocmIABLoadScripts();
+					}
+				}
+			})
+		}
+
+		if (typeof window.__cmp !== 'undefined') {
+			// TCF v1.1
+			// Load scripts
+			ocmIABLoadScripts()
+		}
+	}
+})();
