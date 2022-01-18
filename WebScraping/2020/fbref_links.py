@@ -161,7 +161,7 @@ def baseGetter(team):
         reult="Goeteborg,Schweden"
     if team == "Switzerland":
         reult="Rom,Italien"
-    if team == "Turkey":
+    if team == "Türkiye":
         reult="Baku,Aserbaidschan"
     if team == "Ukraine":
         reult="Bukarest,Rumaenien"

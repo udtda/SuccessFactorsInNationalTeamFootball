@@ -23,6 +23,8 @@ fbref=fbreflinkgetter()
 
 for i in range(51):
     url=[whoscored[i],  tm1[i], tm2[i], kicker[i], uefa[i], fbref[i]]
+    print(url[4])
+    print("Inspecting match " + str(i+1) + " of 51." )
     if i==0:
         scraper(url, first=True)
     if i!=0:
