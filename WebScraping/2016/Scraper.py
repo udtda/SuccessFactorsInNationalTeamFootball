@@ -154,13 +154,10 @@ def scraper(url, first):
     driver.get(url[4])
     soup4 = BeautifulSoup(driver.page_source, features="html.parser")
     driver.quit()
-    distanceBoxes=soup4.find_all("div", class_="stats-module__single-stat stats-module__single-stat--comparison")
-    distanceBox=distanceBoxes[10]
-    abc=distanceBox.find("pk-list-stat-item")
-    homeD=abc["data"]
-    distanceHome=float(homeD)
-    awayD=abc["second-data"]
-    distanceAway=float(awayD)
+    homeD=soup4.find("div", class_="distance-run--value graph-bar--number-value graph-bar--number-value__home-team")
+    distanceHome=float(homeD.text.strip())
+    awayD=soup4.find("div", class_="distance-run--value graph-bar--number-value graph-bar--number-value__away-team")
+    distanceAway=float(awayD.text.strip())
     if first:
         header.append("Distance covered")
     home.append(distanceHome)
