@@ -155,7 +155,7 @@ def baseGetter(team):
         reult="Aix-en-Provence,Frankreich"
     if team == "Austria":
         reult="Mallemort,Frankreich"
-    if team == "Turkey":
+    if team == "Türkiye":
         reult="Saint-Cyr-sur-Mer,Frankreich"
     if team == "Hungary":
         reult="Tourrettes,Frankreich"
